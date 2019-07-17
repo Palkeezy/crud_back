@@ -49,9 +49,9 @@ router.post('/item', async (req, res, next) => {
 router.put('/item/:id', async (req, res, next) => {
     try {
         const {id} = req.params;
-        const {name, in_stock} = req.body;
+        const {in_stock} = req.body;
 
-        if (!id || !in_stock || !name) throw new Error('Some data is incorrect');
+       // if (!id || !in_stock) throw new Error('Some data is incorrect');
 
         const updatedItem = await ItemModel.findOneAndUpdate(
             {
@@ -59,13 +59,12 @@ router.put('/item/:id', async (req, res, next) => {
             },
             {
                 $set: {
-                    in_stock: in_stock,
-                    name: name
+                    in_stock: in_stock
                 }
             });
         res.json({
             success: true,
-            msg: {updatedItem}
+            msg: 'Item has updated'
         });
     } catch (e) {
         res.json({
